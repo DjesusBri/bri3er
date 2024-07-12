@@ -66,7 +66,7 @@ def crear_estudiante():
     
 def ListaEstudiantes(lista_estudiantes):
     if len(lista_estudiantes) > 0:
-        Campos = ("N°", "RUT", "Nombre", "Nota N°1", "Nota N°2", "Nota N°3", "Nota N°4", "Nota Presentación", "Promedio", "Estado")
+        Campos = ("N°", "RUT", "Nombre", "Nota N1", "Nota N2", "Nota N3", "Nota N4", "Nota Presentación", "Promedio", "Estado")
         print(f"\n{Campos[0].center(5)}{Campos[1].center(15)}{Campos[2].center(16)}{Campos[3].center(13)}{Campos[4].center(15)}{Campos[5].center(15)}{Campos[6].center(15)}{Campos[7].center(20)}{Campos[8].center(15)}{Campos[9].center(10)}")
         k = 1
         for estudiante in lista_estudiantes:
