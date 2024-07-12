@@ -22,20 +22,28 @@ def verificadorRut(rut, num_verificador):
 def crear_estudiante():
     rut_ingresado = input("Ingrese el rut del estudiante (12345678-1): ")
     if "-" not in rut_ingresado:
-        print("El rut no esta ingresado no es valido")
+        print("El rut ingresado no es válido")
         return
-    rut, num_verficador= rut_ingresado.split("-")
-    verificadorRut(rut, num_verficador)
-    if not verificadorRut(rut, num_verficador):
+    rut, num_verificador = rut_ingresado.split("-")
+    
+    if not verificadorRut(rut, num_verificador):
         print("Rut ingresado incorrecto. Por favor ingrese de nuevo")
         return
-    nombre = input("Ingrese el nombre del estudiante: ")
     
-    n1 = float(input("Ingrese la primera nota: "))
-    n2 = float(input("Ingrese la segunda nota: "))
-    n3 = float(input("Ingrese la tercera nota: "))
-    n4 = float(input("Ingrese la cuarta nota: "))
-            
+    nombre = input("Ingrese el nombre del estudiante: ")
+    if not nombre.isalpha():
+        print("El nombre ingresado solo debe contener letras")
+        return
+
+    try:
+        n1 = float(input("Ingrese la primera nota: "))
+        n2 = float(input("Ingrese la segunda nota: "))
+        n3 = float(input("Ingrese la tercera nota: "))
+        n4 = float(input("Ingrese la cuarta nota: "))
+    except ValueError:
+        print("Para las notas solamente colocar valores numéricos")
+        return
+
     nota_presentacion = (n1 + n2 + n3) * 0.3 + n4 * 0.1
     promedio = (n1 + n2 + n3 + n4) / 4
     
@@ -74,7 +82,7 @@ def buscar_estudiante_por_rut(rut_buscar):
             encontrado = True
             estado = "Aprobado" if estudiante['promedio'] >= 4.0 else "Reprobado"
             print("\nInformación del Estudiante:")
-            print(f"{'RUT'.center(15)}{'Nombre'.center(16)}{'Nota N°1'.center(13)}{'Nota N°2'.center(15)}{'Nota N°3'.center(15)}{'Nota N°4'.center(15)}{'Promedio'.center(15)}{'Estado'.center(15)}")
+            print(f"{'RUT'.center(15)}{'Nombre'.center(16)}{'Nota N1'.center(13)}{'Nota N2'.center(15)}{'Nota N3'.center(15)}{'Nota N4'.center(15)}{'Promedio'.center(15)}{'Estado'.center(15)}")
             print(f"{estudiante['rut'].center(15)}{estudiante['nombre'].center(16)}{str(estudiante['1Nota']).center(13)}{str(estudiante['2Nota']).center(15)}{str(estudiante['3Nota']).center(15)}{str(estudiante['4Nota']).center(15)}{str(estudiante['promedio']).center(15)}{estado.center(15)}")
             break
 
@@ -84,7 +92,7 @@ def buscar_estudiante_por_rut(rut_buscar):
 def exportar_csv(nombre_archivo, lista_alumnos):
     with open(nombre_archivo, "w", newline="") as archivo_csv:
         escritor_csv = csv.writer(archivo_csv)
-        escritor_csv.writerow(["RUT", "Nombre", "Nota N1", "Nota N2", "Nota N3", "Nota N4", "Nota Presentación", "Promedio", "Estado"])
+        escritor_csv.writerow(["RUT", "Nombre", "Nota N1", "Nota N2", "Nota N3", "Nota N4", "Nota Presentacion", "Promedio", "Estado"])
         
         for alumno in lista_alumnos:
             rut = alumno['rut']
@@ -100,10 +108,6 @@ def exportar_csv(nombre_archivo, lista_alumnos):
             escritor_csv.writerow([rut, nombre, nota1, nota2, nota3, nota4, nota_presentacion, promedio, estado])
     
     print(f"Se ha exportado correctamente la lista de alumnos en '{nombre_archivo}'.")
-
-
-
-
 
 while True:
     print ("calcular notas de estudiantes")
